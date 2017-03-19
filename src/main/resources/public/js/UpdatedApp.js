@@ -17,7 +17,7 @@ if (playerTable != null) {
                     // This ajax call will asnychonously call the back end, and tell it where to place the ship,
                     // then get back a game model with the ship placed, and display the new model.
                     var request = $.ajax({
-                        url: "/placeShipUpdated/"+$( "#shipSelec" ).val()+"/"+(j+1)+"/"+(i+1)+"/"+$( "#orientationSelec" ).val()+"/0",
+                        url: "/placeShipUpdated/"+$( "#shipSelec" ).val()+"/"+(j+1)+"/"+(i+1)+"/"+$( "#orientationSelec" ).val()+"/"+$( "#placeDiffSelec" ),
                         method: "post",
                         data: JSON.stringify(gameModel),
                         contentType: "application/json; charset=utf-8",
@@ -46,19 +46,19 @@ if (playerTable != null) {
 
                     }else if($( "#orientationSelec" ).val() == "vertical"){
 
-                         if($( "#shipSelec" ).val() == "aircraftCarrier" && i > 5){
-                             alert("Place ship within the board.")
+                        if($( "#shipSelec" ).val() == "aircraftCarrier" && i > 5){
+                            alert("Place ship within the board.")
 
-                         }else if( $( "#shipSelec" ).val() == "battleship" && i > 6){
-                             alert("Place ship within the board.")
+                        }else if( $( "#shipSelec" ).val() == "battleship" && i > 6){
+                            alert("Place ship within the board.")
 
-                         }else if( $( "#shipSelec" ).val() == "clipper" && i > 7){
-                             alert("Place ship within the board.")
+                        }else if( $( "#shipSelec" ).val() == "clipper" && i > 7){
+                            alert("Place ship within the board.")
 
-                         }else if( $( "#shipSelec" ).val() == "submarine" && i > 7){
-                             alert("Place ship within the board.")
+                        }else if( $( "#shipSelec" ).val() == "submarine" && i > 7){
+                            alert("Place ship within the board.")
 
-                         }
+                        }
                     }
 
                     //This will be called when the call is returned from the server.
@@ -184,7 +184,7 @@ if (computerTable != null) {
 
 
                     var request = $.ajax({
-                        url: "/"+$('input:radio[name=fire]:checked').val() +"/"+(j+1)+"/"+(i+1)+"/0",
+                        url: "/"+$('input:radio[name=fire]:checked').val() +"/"+(j+1)+"/"+(i+1)+"/"+$( "#fireDiffSelec" ),
                         method: "post",
                         data: JSON.stringify(gameModel),
                         contentType: "application/json; charset=utf-8",
@@ -260,23 +260,23 @@ if (computerTable != null) {
 
 //This function will be called once the page is loaded.  It will get a new game model from the back end, and display it.
 $( document ).ready(function() {
-  $.getJSON("modelUpdated", function( json ) {
-    displayGameState(json);
-    gameModel = json;
-  });
+    $.getJSON("modelUpdated", function( json ) {
+        displayGameState(json);
+        gameModel = json;
+    });
 });
 
 
 function placeShip() {
 
-   // This ajax call will asnychonously call the back end, and tell it where to place the ship, then get back a game model with the ship placed, and display the new model.
-   var request = $.ajax({
-     url: "/placeShipUpdated/"+$( "#shipSelec" ).val()+"/"+$( "#rowSelec" ).val()+"/"+$( "#colSelec" ).val()+"/"+$( "#orientationSelec" ).val()+"/0",
-     method: "post",
-     data: JSON.stringify(gameModel),
-     contentType: "application/json; charset=utf-8",
-     dataType: "json"
-   });
+    // This ajax call will asnychonously call the back end, and tell it where to place the ship, then get back a game model with the ship placed, and display the new model.
+    var request = $.ajax({
+        url: "/placeShipUpdated/"+$( "#shipSelec" ).val()+"/"+$( "#rowSelec" ).val()+"/"+$( "#colSelec" ).val()+"/"+$( "#orientationSelec" ).val()+"/"+$( "#placeDiffSelec" ),
+        method: "post",
+        data: JSON.stringify(gameModel),
+        contentType: "application/json; charset=utf-8",
+        dataType: "json"
+    });
 
 
     //Checks if the Computer has fired at all and if so then alert the user that you can't place or move ships
@@ -301,30 +301,30 @@ function placeShip() {
 
     }else if($( "#orientationSelec" ).val() == "vertical"){
         if($( "#shipSelec" ).val() == "aircraftCarrier" && $( "#colSelec" ).val() > 5){
-          alert("Place ship within the board.")
+            alert("Place ship within the board.")
 
         }else if( $( "#shipSelec" ).val() == "battleship" && $( "#colSelec" ).val() > 6){
-          alert("Place ship within the board.")
+            alert("Place ship within the board.")
 
         }else if( $( "#shipSelec" ).val() == "clipper" && $( "#colSelec" ).val() > 9){
-          alert("Place ship within the board.")
+            alert("Place ship within the board.")
 
         }else if( $( "#shipSelec" ).val() == "submarine" && $( "#colSelec" ).val() > 7){
-          alert("Place ship within the board.")
+            alert("Place ship within the board.")
         }
     }
 
-   //This will be called when the call is returned from the server.
-   request.done(function( currModel ) {
-     displayGameState(currModel);
-     gameModel = currModel;
+    //This will be called when the call is returned from the server.
+    request.done(function( currModel ) {
+        displayGameState(currModel);
+        gameModel = currModel;
 
-   });
+    });
 
-   // if there is a problem, and the back end does not respond, then an alert will be shown.
-   request.fail(function( jqXHR, textStatus ) {
-     alert( "Request failed: " + textStatus );
-   });
+    // if there is a problem, and the back end does not respond, then an alert will be shown.
+    request.fail(function( jqXHR, textStatus ) {
+        alert( "Request failed: " + textStatus );
+    });
 }
 
 //Similar to placeShip, but instead it will fire at a location the user selects.
@@ -345,23 +345,23 @@ function fire(){
     }
 
 
-   var request = $.ajax({
-     url: "/fireUpdated/"+$( "#rowFire" ).val()+"/"+$( "#colFire" ).val()+"/0",
-     method: "post",
-     data: JSON.stringify(gameModel),
-     contentType: "application/json; charset=utf-8",
-     dataType: "json"
-   });
+    var request = $.ajax({
+        url: "/fireUpdated/"+$( "#rowFire" ).val()+"/"+$( "#colFire" ).val()+"/"+$( "#fireDiffSelec" ),
+        method: "post",
+        data: JSON.stringify(gameModel),
+        contentType: "application/json; charset=utf-8",
+        dataType: "json"
+    });
 
-   request.done(function( currModel ) {
-     displayGameState(currModel);
-     gameModel = currModel;
+    request.done(function( currModel ) {
+        displayGameState(currModel);
+        gameModel = currModel;
 
-   });
+    });
 
-   request.fail(function( jqXHR, textStatus ) {
-     alert( "Request failed: " + textStatus );
-   });
+    request.fail(function( jqXHR, textStatus ) {
+        alert( "Request failed: " + textStatus );
+    });
 
 }
 
