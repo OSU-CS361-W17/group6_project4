@@ -330,88 +330,30 @@
                     <option value="destroyer">Destroyer (2)</option>
                     <option value="submarine">Submarine (3)</option>
                 </select>
-                <br>
-
-                <!--<input type="radio" name="shipSelec" value="aircraftCarrier"> AircraftCarrier<br>
-                <input type="radio" name="shipSelec" value="battleship"> Battleship<br>
-                <input type="radio" name="shipSelec" value="cruiser"> Cruiser<br>
-                <input type="radio" name="shipSelec" value="submarine"> Submarine<br>
-                <input type="radio" name="shipSelec" value="destroyer"> Destroyer<br>-->
-
-                <!--<br>
-                Row:
-                <select name="rowSelec" id="colSelec">
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5</option>
-                    <option value="6">6</option>
-                    <option value="7">7</option>
-                    <option value="8">8</option>
-                    <option value="9">9</option>
-                    <option value="10">10</option>
-                </select>
-                <br>
-                Column:
-                <select name="colSelec" id="rowSelec">
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5</option>
-                    <option value="6">6</option>
-                    <option value="7">7</option>
-                    <option value="8">8</option>
-                    <option value="9">9</option>
-                    <option value="10">10</option>
-                </select>-->
-                <br>
+                <br><br>
                 Orientation:
                 <select name="orientationSelec" id="orientationSelec">
                     <option value="horizontal">horizontal</option>
                     <option value="vertical">vertical</option>
                 </select>
-                <!-- <br>
-                 <button type="button" onclick="placeShip()">Place</button>-->
+                <h3>Computer Place options:</h3>
+                <select name="placeDiffSelec" id="placeDiffSelec">
+                    <option value="Easy">Easy</option>
+                    <option value="Hard">Hard</option>
+                </select>
             </div>
         </th>
 
 
         <th id="lost">
-            <!--<h3>Scan:</h3>-->
-            <h3>Fire:</h3>
-            <!---<div id="AircraftcarrierDiv">
-                Row:
-                <select name="rowFire" id="colFire">
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5</option>
-                    <option value="6">6</option>
-                    <option value="7">7</option>
-                    <option value="8">8</option>
-                    <option value="9">9</option>
-                    <option value="10">10</option>
-                </select>
-                <br>
-                Column:
-                <select name="colFire" id="rowFire">
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5</option>
-                    <option value="6">6</option>
-                    <option value="7">7</option>
-                    <option value="8">8</option>
-                    <option value="9">9</option>
-                    <option value="10">10</option>
-                </select>
-                <br>
-                <button type="button" onclick="fire()">Scan</button>
-            </div>-->
+            <h3>Player Fire options:</h3>
+            (Fire only)
+            <br><br><br>
+            <h3>Computer Fire options:</h3>
+            <select name="fireDiffSelec" id="fireDiffSelec">
+                <option value="Easy">Easy</option>
+                <option value="Hard">Hard</option>
+            </select>
         </th>
     </tr>
 </table>
