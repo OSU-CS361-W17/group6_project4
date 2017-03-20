@@ -16,7 +16,7 @@ if (playerTable != null) {
                 return function clickPlace() {
                     // This ajax call will asnychonously call the back end, and tell it where to place the ship,
                     // then get back a game model with the ship placed, and display the new model.
-                    var placeDiff = document.getElementById("fireDiffSelec");
+                    var placeDiff = document.getElementById("placeDiffSelec");
                     var placeDiffValue = placeDiff.options[placeDiff.selectedIndex].value;
 
                     var request = $.ajax({
@@ -274,7 +274,7 @@ $( document ).ready(function() {
 
 function placeShip() {
 
-    var placeDiff = document.getElementById("fireDiffSelec");
+    var placeDiff = document.getElementById("placeDiffSelec");
     var placeDiffValue = placeDiff.options[placeDiff.selectedIndex].value;
     // This ajax call will asnychonously call the back end, and tell it where to place the ship, then get back a game model with the ship placed, and display the new model.
     var request = $.ajax({
