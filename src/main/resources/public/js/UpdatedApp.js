@@ -378,7 +378,15 @@ function fire(){
 //This function will display the game model.  It displays the ships on the users board, and then shows where there have been hits and misses on both boards.
 function displayGameState(gameModel){
 
-    if(countDownedShipsPlayer(gameModel) == 5){
+    if(countDownedShipsPlayer(gameModel) == 5 && countDownedShipsComputer(gameModel) == 5){
+        $( '#lost' ).css( "display", "none" );
+
+        $( '#TIE' ).css( "display", "inline" );
+        $( '#TIE' ).css( "float", "middle" );
+
+        alert("Tie!");
+
+    }else if(countDownedShipsPlayer(gameModel) == 5){
         $( '#lost' ).css( "display", "none" );
 
         $( '#computerWin' ).css( "display", "inline" );

@@ -67,14 +67,6 @@ public class BattleshipModel {
         return computerAircraftCarrier;
     }
 
-    /*
-    protected Ship[] getPlayerArray() { return playerArray; }
-
-    protected Ship[] getComputerArray() {
-        return computerArray;
-    }
-*/
-
     public List<Point> getPlayerHits() {
         return playerHits;
     }

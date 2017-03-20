@@ -276,7 +276,7 @@ public class Main {
 
         int row = Integer.parseInt(X);
         int col = Integer.parseInt(Y);
-        int j = 0;
+        int sizeOfHitArray = 0;
 
         // Make point object from coordinates
         Point FireSpot = new Point(row, col);
@@ -308,9 +308,7 @@ public class Main {
             }
         }
 
-        j = model.getComputerHits().size();
-        //Point Clipper = new Point((PArray[3].getStart().getAcross() + PArray[3].getEnd().getAcross())/2,(PArray[3].getStart().getDown() + PArray[3].getEnd().getDown())/2);
-
+        sizeOfHitArray = model.getComputerHits().size();
 
         // The following branch tree checks if a point fired at
         // BY A PLAYER has hit a COMPUTER ship and adds the point to the array of hits if so
@@ -328,7 +326,7 @@ public class Main {
             }
         }
 
-        if (j == model.getComputerHits().size()) {
+        if (sizeOfHitArray == model.getComputerHits().size()) {
             model.addPointtoArray(FireSpot, model.getComputerMisses());
         }
 
@@ -348,7 +346,7 @@ public class Main {
         // Create two random coordinates for computer to shoot at and make a point object of them
         Ship[] PArray = model.resetArrayUpdated( model, true);
         Point FireSpotComputer;
-        int shootX, shootY, j;
+        int shootX, shootY, sizeOfHitArray;
 
         do{ // Keeps getting random location until it hasn't fired at that spot
             shootX = (int )(Math.random() * 10 + 1);
@@ -385,7 +383,7 @@ public class Main {
             }
         }
 
-        j = model.getPlayerHits().size();
+        sizeOfHitArray = model.getPlayerHits().size();
 
         // The following branch tree checks if a point fired at
         // BY A PLAYER has hit a COMPUTER ship and adds the point to the array of hits if so
@@ -402,7 +400,7 @@ public class Main {
             }
         }
 
-        if(j == model.getPlayerHits().size()){
+        if(sizeOfHitArray == model.getPlayerHits().size()){
             model.addPointtoArray(FireSpotComputer, model.getPlayerMisses());
         }
 
@@ -414,7 +412,7 @@ public class Main {
         // Create two random coordinates for computer to shoot at and make a point object of them
         Ship[] PArray = model.resetArrayUpdated( model, true);
         Point FireSpotComputer = new Point( 0, 0);
-        int shootX, shootY, j;
+        int shootX, shootY, sizeOfHitArray;
 
         // Keeps getting random location until it hasn't fired at that spot
         for(int x = 1; x < 11; x++){
@@ -429,7 +427,7 @@ public class Main {
             }
         }
 
-        j = model.getPlayerHits().size();
+        sizeOfHitArray = model.getPlayerHits().size();
 
         // The following branch tree checks if a point fired at
         // BY A PLAYER has hit a COMPUTER ship and adds the point to the array of hits if so
@@ -438,19 +436,11 @@ public class Main {
 
                 model.addPointtoArray(FireSpotComputer, model.getPlayerHits());
                 model.getShipByID(PArray[i].getName()).setHealth(PArray[i].getHealth() - 1);
-                /*System.out.println(model.getShipByID(PArray[i].getName()).getHealth());
 
-                //This is for sinking the ship.
-                if(model.getShipByID(PArray[i].getName()).getHealth() == 0){
-                    model = Sink(model.getShipByID(PArray[i].getName()).getStart(), model.getShipByID(PArray[i].getName()).getEnd(), false, model);
-                    System.out.println("Sink: " + model.getShipByID(PArray[i].getName()).getHealth());
-                }else{
-                    System.out.println("Didn't Sink health: " + model.getShipByID(PArray[i].getName()).getHealth());
-                }*/
             }
         }
 
-        if(j == model.getPlayerHits().size()){
+        if(sizeOfHitArray == model.getPlayerHits().size()){
             model.addPointtoArray(FireSpotComputer, model.getPlayerMisses());
         }
 
@@ -822,17 +812,8 @@ public class Main {
 
             for ( int x = shipStart.getAcross(); x <= shipEnd.getAcross(); x++ ){
                 Point Shot = new Point(x, y);
-                //Shot.setAcross(x);
-                //Shot.setDown(y);
 
                 if( !(alreadyShot(Shot, model, player)) ){
-
-                    if(player){
-                        model.addPointtoArray( Shot, model.getComputerHits() );
-                    }else{
-                        model.addPointtoArray( Shot, model.getPlayerHits() );
-                    }
-                }else{
                     if(player){
                         model.addPointtoArray( Shot, model.getComputerHits() );
                     }else{
@@ -845,18 +826,9 @@ public class Main {
             int x = shipStart.getAcross();
 
             for ( int y = shipStart.getDown(); y <= shipEnd.getDown(); y++ ) {
-                Point Shot = new Point();
-                Shot.setAcross(x);
-                Shot.setDown(y);
+                Point Shot = new Point( x, y);
 
                 if( !(alreadyShot(Shot, model, player)) ){
-
-                    if(player){
-                        model.addPointtoArray( Shot, model.getComputerHits() );
-                    }else{
-                        model.addPointtoArray( Shot, model.getPlayerHits() );
-                    }
-                }else{
                     if(player){
                         model.addPointtoArray( Shot, model.getComputerHits() );
                     }else{
