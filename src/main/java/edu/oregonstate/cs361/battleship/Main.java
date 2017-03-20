@@ -250,8 +250,8 @@ public class Main {
             Ship[] CArray = model.resetArrayUpdated(model, false);
             int computerLength = model.getShipByID(CArray[id].getName()).getLength() - 1;
 
-            model.getShipByID(CArray[id].getName()).setStart(id, id);
-            model.getShipByID(CArray[id].getName()).setEnd(id + computerLength, id);
+            model.getShipByID(CArray[id].getName()).setStart(id + 1, id + 1);
+            model.getShipByID(CArray[id].getName()).setEnd(id + computerLength + 1, id + 1);
         }
 
         return model;
@@ -417,11 +417,12 @@ public class Main {
         // Keeps getting random location until it hasn't fired at that spot
         for(int x = 1; x < 11; x++){
             for(int y = 1; y < 11; y++){
-                shootX = x;
-                shootY = y;
-                FireSpotComputer = new Point(shootX, shootY);
 
-                if(alreadyShot( FireSpotComputer, model,false)){
+                FireSpotComputer = new Point( x, y);
+
+                if(!alreadyShot( FireSpotComputer, model,false)){
+                    x = 12;
+                    y = 12;
                     break;
                 }
             }
@@ -437,6 +438,10 @@ public class Main {
                 model.addPointtoArray(FireSpotComputer, model.getPlayerHits());
                 model.getShipByID(PArray[i].getName()).setHealth(PArray[i].getHealth() - 1);
 
+                //This is for sinking the ship.
+                if(model.getShipByID(PArray[i].getName()).getHealth() == 0){
+                    model = Sink(model.getShipByID(PArray[i].getName()).getStart(), model.getShipByID(PArray[i].getName()).getEnd(), false, model);
+                }
             }
         }
 
