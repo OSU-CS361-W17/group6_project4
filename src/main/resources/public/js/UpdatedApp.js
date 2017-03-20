@@ -16,8 +16,11 @@ if (playerTable != null) {
                 return function clickPlace() {
                     // This ajax call will asnychonously call the back end, and tell it where to place the ship,
                     // then get back a game model with the ship placed, and display the new model.
+                    var placeDiff = document.getElementById("fireDiffSelec");
+                    var placeDiffValue = placeDiff.options[placeDiff.selectedIndex].value;
+
                     var request = $.ajax({
-                        url: "/placeShipUpdated/"+$( "#shipSelec" ).val()+"/"+(j+1)+"/"+(i+1)+"/"+$( "#orientationSelec" ).val()+"/"+$( "#placeDiffSelec" ),
+                        url: "/placeShipUpdated/"+$( "#shipSelec" ).val()+"/"+(j+1)+"/"+(i+1)+"/"+$( "#orientationSelec" ).val()+"/"+placeDiffValue,
                         method: "post",
                         data: JSON.stringify(gameModel),
                         contentType: "application/json; charset=utf-8",
@@ -182,9 +185,11 @@ if (computerTable != null) {
                         alert( "Place Submarine!!!\nBefore you can fire.");
                     }
 
+                    var fireDiff = document.getElementById("fireDiffSelec");
+                    var fireDiffValue = fireDiff.options[fireDiff.selectedIndex].value;
 
                     var request = $.ajax({
-                        url: "/"+$('input:radio[name=fire]:checked').val() +"/"+(j+1)+"/"+(i+1)+"/"+$( "#fireDiffSelec" ),
+                        url: "/"+$('input:radio[name=fire]:checked').val() +"/"+(j+1)+"/"+(i+1)+"/"+fireDiffValue,
                         method: "post",
                         data: JSON.stringify(gameModel),
                         contentType: "application/json; charset=utf-8",
@@ -269,9 +274,11 @@ $( document ).ready(function() {
 
 function placeShip() {
 
+    var placeDiff = document.getElementById("fireDiffSelec");
+    var placeDiffValue = placeDiff.options[placeDiff.selectedIndex].value;
     // This ajax call will asnychonously call the back end, and tell it where to place the ship, then get back a game model with the ship placed, and display the new model.
     var request = $.ajax({
-        url: "/placeShipUpdated/"+$( "#shipSelec" ).val()+"/"+$( "#rowSelec" ).val()+"/"+$( "#colSelec" ).val()+"/"+$( "#orientationSelec" ).val()+"/"+$( "#placeDiffSelec" ),
+        url: "/placeShipUpdated/"+$( "#shipSelec" ).val()+"/"+$( "#rowSelec" ).val()+"/"+$( "#colSelec" ).val()+"/"+$( "#orientationSelec" ).val()+"/"+placeDiffValue,
         method: "post",
         data: JSON.stringify(gameModel),
         contentType: "application/json; charset=utf-8",
@@ -344,9 +351,12 @@ function fire(){
         alert( "Place Submarine!!!\nBefore you can fire.");
     }
 
+    //Get the value of the fire diff so as to send it to req
+    var fireDiff = document.getElementById("fireDiffSelec");
+    var fireDiffValue = fireDiff.options[fireDiff.selectedIndex].value;
 
     var request = $.ajax({
-        url: "/fireUpdated/"+$( "#rowFire" ).val()+"/"+$( "#colFire" ).val()+"/"+$( "#fireDiffSelec" ),
+        url: "/fireUpdated/"+$( "#rowFire" ).val()+"/"+$( "#colFire" ).val()+"/"+fireDiffValue,
         method: "post",
         data: JSON.stringify(gameModel),
         contentType: "application/json; charset=utf-8",
