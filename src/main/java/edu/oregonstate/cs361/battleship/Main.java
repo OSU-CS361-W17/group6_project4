@@ -319,18 +319,12 @@ public class Main {
 
 
                 model.addPointtoArray(FireSpot, model.getComputerHits());
-                //System.out.println("Player");
-                //System.out.println(model.getShipByID(CArray[i].getName()).getHealth());
                 model.getShipByID(CArray[i].getName()).setHealth(CArray[i].getHealth() - 1);
-                /*System.out.println(model.getShipByID(CArray[i].getName()).getHealth());
 
                 //This is for sinking the ship.
                 if(model.getShipByID(CArray[i].getName()).getHealth() == 0){
                     model = Sink(model.getShipByID(CArray[i].getName()).getStart(), model.getShipByID(CArray[i].getName()).getEnd(), true, model);
-                    System.out.println("Sink: " + model.getShipByID(CArray[i].getName()).getHealth());
-                }else{
-                    System.out.println("Didn't Sink health: " + model.getShipByID(CArray[i].getName()).getHealth());
-                }*/
+                }
             }
         }
 
@@ -362,8 +356,36 @@ public class Main {
             FireSpotComputer = new Point(shootX, shootY);
         } while ( alreadyShot( FireSpotComputer, model,false));
 
+        for(int i = 0; i < model.getPlayerHits().size(); i++){
+            Point checkPoint = model.getPlayerHits().get(i);
+
+            for (int k = 0; k < 5; k++) {
+                if (Hit(PArray[k].getStart(), PArray[k].getEnd(), checkPoint)) { //Finds the ship
+                    if(PArray[k].getHealth() > 0){ //Makes sure that the ship hasn't been sunk before (user knows this)
+
+                        Point Left = new Point(checkPoint.getAcross() - 1, checkPoint.getDown());
+                        Point Right = new Point(checkPoint.getAcross() + 1, checkPoint.getDown());
+                        Point Down = new Point(checkPoint.getAcross(), checkPoint.getDown() - 1);
+                        Point Up = new Point(checkPoint.getAcross(), checkPoint.getDown() + 1);
+
+                        if( !alreadyShot( Left, model,false) && Left.getAcross() > 0){
+                            FireSpotComputer = new Point(Left.getAcross(), Left.getDown());
+
+                        }else if( !alreadyShot( Right, model,false ) && Right.getAcross() < 11){
+                            FireSpotComputer = new Point( Right.getAcross(), Right.getDown());
+
+                        }else if( !alreadyShot( Down, model,false ) && Down.getDown() > 0){
+                            FireSpotComputer = new Point(Down.getAcross(), Down.getDown());
+
+                        }else if( !alreadyShot( Up, model,false ) && Up.getDown() < 11){
+                            FireSpotComputer = new Point(Up.getAcross(), Up.getDown());
+                        }
+                    }
+                }
+            }
+        }
+
         j = model.getPlayerHits().size();
-        //Point Clipper = new Point((PArray[3].getStart().getAcross() + PArray[3].getEnd().getAcross())/2,(PArray[3].getStart().getDown() + PArray[3].getEnd().getDown())/2);
 
         // The following branch tree checks if a point fired at
         // BY A PLAYER has hit a COMPUTER ship and adds the point to the array of hits if so
@@ -371,18 +393,12 @@ public class Main {
             if (Hit(PArray[i].getStart(), PArray[i].getEnd(), FireSpotComputer)) {
 
                 model.addPointtoArray(FireSpotComputer, model.getPlayerHits());
-                //System.out.println("Computer");
-                //System.out.println(model.getShipByID(PArray[i].getName()).getHealth());
                 model.getShipByID(PArray[i].getName()).setHealth(PArray[i].getHealth() - 1);
-                /*System.out.println(model.getShipByID(PArray[i].getName()).getHealth());
 
                 //This is for sinking the ship.
                 if(model.getShipByID(PArray[i].getName()).getHealth() == 0){
                     model = Sink(model.getShipByID(PArray[i].getName()).getStart(), model.getShipByID(PArray[i].getName()).getEnd(), false, model);
-                    System.out.println("Sink: " + model.getShipByID(PArray[i].getName()).getHealth());
-                }else{
-                    System.out.println("Didn't Sink health: " + model.getShipByID(PArray[i].getName()).getHealth());
-                }*/
+                }
             }
         }
 
@@ -421,8 +437,6 @@ public class Main {
             if (Hit(PArray[i].getStart(), PArray[i].getEnd(), FireSpotComputer)) {
 
                 model.addPointtoArray(FireSpotComputer, model.getPlayerHits());
-                //System.out.println("Computer");
-                //System.out.println(model.getShipByID(PArray[i].getName()).getHealth());
                 model.getShipByID(PArray[i].getName()).setHealth(PArray[i].getHealth() - 1);
                 /*System.out.println(model.getShipByID(PArray[i].getName()).getHealth());
 
@@ -801,23 +815,17 @@ public class Main {
         return false; // points given are not horizontal or vertical and not valid, can't hit diagonally
     }
 
-    /*public static BattleshipModelUpdated Sink( Point shipStart, Point shipEnd, boolean player, BattleshipModelUpdated model ){
-        Point Shot = new Point();
+    public static BattleshipModelUpdated Sink( Point shipStart, Point shipEnd, boolean player, BattleshipModelUpdated model ){
 
         if( shipStart.getDown() == shipEnd.getDown() ){
             int y = shipStart.getDown();
 
             for ( int x = shipStart.getAcross(); x <= shipEnd.getAcross(); x++ ){
-                Shot.setAcross(x);
-                Shot.setDown(y);
+                Point Shot = new Point(x, y);
+                //Shot.setAcross(x);
+                //Shot.setDown(y);
 
-                System.out.println("y: " + y);
-                System.out.println("x: " + x);
-
-                if( !alreadyShot(Shot, model, player) ){
-                    System.out.println("y: " + y);
-                    System.out.println("x: " + x);
-                    System.out.println("Yes ^");
+                if( !(alreadyShot(Shot, model, player)) ){
 
                     if(player){
                         model.addPointtoArray( Shot, model.getComputerHits() );
@@ -825,9 +833,11 @@ public class Main {
                         model.addPointtoArray( Shot, model.getPlayerHits() );
                     }
                 }else{
-                    System.out.println("y: " + y);
-                    System.out.println("x: " + x);
-                    System.out.println("Nope ^");
+                    if(player){
+                        model.addPointtoArray( Shot, model.getComputerHits() );
+                    }else{
+                        model.addPointtoArray( Shot, model.getPlayerHits() );
+                    }
                 }
             }
 
@@ -835,30 +845,27 @@ public class Main {
             int x = shipStart.getAcross();
 
             for ( int y = shipStart.getDown(); y <= shipEnd.getDown(); y++ ) {
+                Point Shot = new Point();
                 Shot.setAcross(x);
                 Shot.setDown(y);
 
-                System.out.println("y: " + y);
-                System.out.println("x: " + x);
+                if( !(alreadyShot(Shot, model, player)) ){
 
-                if( !alreadyShot(Shot, model, player) ){
-
-                    System.out.println("y: " + y);
-                    System.out.println("x: " + x);
-                    System.out.println("Yes ^");
                     if(player){
                         model.addPointtoArray( Shot, model.getComputerHits() );
                     }else{
                         model.addPointtoArray( Shot, model.getPlayerHits() );
                     }
                 }else{
-                    System.out.println("y: " + y);
-                    System.out.println("x: " + x);
-                    System.out.println("Nope ^");
+                    if(player){
+                        model.addPointtoArray( Shot, model.getComputerHits() );
+                    }else{
+                        model.addPointtoArray( Shot, model.getPlayerHits() );
+                    }
                 }
             }
         }
 
         return model;
-    }*/
+    }
 }
