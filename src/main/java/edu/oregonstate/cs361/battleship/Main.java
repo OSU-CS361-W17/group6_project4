@@ -423,8 +423,6 @@ public class Main {
                 if(!alreadyShot( FireSpotComputer, model,false)){
                     x = 12;
                     y = 12;
-                    System.out.println("x: " + FireSpotComputer.getAcross());
-                    System.out.println("y: " + FireSpotComputer.getDown());
                     break;
                 }
             }
